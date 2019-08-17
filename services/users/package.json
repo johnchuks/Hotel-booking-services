@@ -4,7 +4,8 @@
   "description": "user service",
   "main": "index.js",
   "scripts": {
-    "start:dev": "nodemon ./src/bin/www --exec babel-node",
+    "build":"node_modules/.bin/sequelize db:migrate",
+    "start:dev": "yarn build & nodemon ./src/bin/www --exec babel-node",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

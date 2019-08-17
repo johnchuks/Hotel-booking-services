@@ -7,6 +7,23 @@ services:
       dockerfile: Dockerfile
     volumes:
       - './services/users:/usr/src/app'
+    ports:
+      - "5003:5000"
     environment:
       - PORT=5000
+      - DATABASE_URL=postgresql://postgres:postgres@users-db:5432/users
+      - JWT_SECRET=loyaltyprogram
     command: yarn start:dev
+    depends_on:
+      - users-db
+
+  users-db:
+    build:
+      context: ./services/users/src/config/db
+      dockerfile: Dockerfile
+    ports:
+      - "5434:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+

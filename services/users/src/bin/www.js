@@ -12,6 +12,7 @@ app.use(cors());
 app.use(bodyparser());
 app.use(morgan('dev'))
 app.get('/', (req, res) => res.send('Weclome to JLBooking-user-service'))
+app.use('/api/users', require('../api'))
 
 app.listen(port, () => {
   console.log(`JLBooking-user-service listening on port ${port}!`)
