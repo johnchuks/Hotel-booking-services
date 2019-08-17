@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  users:
+    build:
+      context: ./services/users
+      dockerfile: Dockerfile
+    volumes:
+      - './services/users:/usr/src/app'
+    environment:
+      - PORT=5000
+    command: yarn start:dev
