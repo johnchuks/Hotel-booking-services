@@ -1,16 +1,17 @@
 http:
   port: 8080
-  host: localhost
 admin:
   port: 9876
   host: localhost
 apiEndpoints:
   # see: http://www.express-gateway.io/docs/configuration/gateway.config.yml/apiEndpoints
   customers:
-    host: 'http://localhost:5000'
-    path: '/api/customers/*'
+    host: localhost
+    paths: '/api/customers/*'
 serviceEndpoints:
   # see: http://www.express-gateway.io/docs/configuration/gateway.config.yml/serviceEndpoints
+  custservice:
+    url: "http://host.docker.internal:5000/"
 policies:
   - basic-auth
   - cors
@@ -22,3 +23,11 @@ policies:
   - rate-limit
 pipelines:
   # see: https://www.express-gateway.io/docs/configuration/gateway.config.yml/pipelines
+  default_1:
+    apiEndpoints:
+      - customers
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: custservice
+              changeOrigin: false

@@ -34,6 +34,7 @@ class Auth {
         lastName,
         email,
         password,
+        points: 200,
       })
         .then(user => {
           return res.status(201).json({ user: user.toJSON() });
@@ -46,7 +47,7 @@ class Auth {
   static getUser(req, res) {
     const { email } = req.query;
     if (email) {
-      const user = Customer.findOne({
+      Customer.findOne({
         where: {
           email
         }
@@ -56,10 +57,9 @@ class Auth {
         }
         return res.status(404).json({ message: 'User does not exist'})
       }).catch(error => {
-        return res.status(400).json(error);
+        return res.status(500).json(error);
       });
     }
-    return res.status(400).json({ message: 'An error occurred'})
 }
 }
 

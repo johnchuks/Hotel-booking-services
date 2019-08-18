@@ -12,6 +12,9 @@ services:
       - DATABASE_URL=postgresql://postgres:postgres@customers-db:5432/customers
       - JWT_SECRET=loyaltyprogram
     command: yarn start:dev
+    volumes:
+      - './services/customers:/usr/src/app'
+      - '/usr/src/app/node_modules'
     depends_on:
       - customers-db
 
@@ -30,8 +33,13 @@ services:
       context: ./services/gateway
       dockerfile: Dockerfile
     ports:
-      - "6000:8080"
-    command: yarn start 
+      - "8080:8080"
+    command: yarn start
+    volumes:
+      - './services/gateway:/usr/src/app'
+      - '/usr/src/app/node_modules'
+    environment:
+      - LOG_LEVEL=debug
     depends_on:
       - customers
 
