@@ -8,10 +8,15 @@ apiEndpoints:
   customers:
     host: localhost
     paths: '/api/customers/*'
+  bookings:
+    host: localhost
+    paths: '/api/bookings/*'
 serviceEndpoints:
   # see: http://www.express-gateway.io/docs/configuration/gateway.config.yml/serviceEndpoints
   custservice:
     url: "http://host.docker.internal:5000/"
+  bookservice:
+    url: "http://host.docker.internal:3000/"
 policies:
   - basic-auth
   - cors
@@ -23,7 +28,7 @@ policies:
   - rate-limit
 pipelines:
   # see: https://www.express-gateway.io/docs/configuration/gateway.config.yml/pipelines
-  default_1:
+  pipeline_1:
     apiEndpoints:
       - customers
     policies:
@@ -31,3 +36,13 @@ pipelines:
           - action:
               serviceEndpoint: custservice
               changeOrigin: false
+  
+  pipeline_2:
+    apiEndpoints:
+      - bookings
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: bookservice
+              changeOrigin: false
+

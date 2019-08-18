@@ -28,6 +28,32 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
   
+  bookings:
+    build:
+      context: ./services/bookings
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - DATABASE_URL=postgresql://postgres:postgres@bookings-db:5432/bookings
+    command: yarn start:dev
+    volumes:
+      - './services/bookings:/usr/src/app'
+      - '/usr/src/app/node_modules'
+    depends_on:
+      - bookings-db
+  
+  bookings-db:
+    build:
+      context: ./services/bookings/src/config/db
+      dockerfile: Dockerfile
+    ports:
+      - "5436:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  
   gateway:
     build:
       context: ./services/gateway
@@ -42,4 +68,3 @@ services:
       - LOG_LEVEL=debug
     depends_on:
       - customers
-

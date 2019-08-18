@@ -1,8 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { Customer } from '../models';
 
-
-
 class Auth {
   static register(req, res) {
     const { firstName, lastName, email, password } = req.body;
