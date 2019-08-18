@@ -3,7 +3,7 @@ import bcrpyt from 'bcrypt';
 const saltRounds = 10;
 
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
+  const Customer = sequelize.define('Customer', {
     firstName: {
       type:DataTypes.STRING,
       allowNull: false,
@@ -37,6 +37,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
+    points: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
   }, {
     hooks: {
       beforeCreate:((user, options) => {
@@ -46,10 +50,10 @@ module.exports = (sequelize, DataTypes) => {
       })
     },
   })
-  User.prototype.toJSON = function() {
+  Customer.prototype.toJSON = function() {
     const user = { ...this.dataValues };
     delete user.password;
     return user;
   };
-  return User;
+  return Customer;
 }

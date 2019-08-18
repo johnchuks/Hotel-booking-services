@@ -1,14 +1,10 @@
 import jwt from 'jsonwebtoken';
-import { User } from '../models';
+import { Customer } from '../models';
 
 
-const createToken = user => {
-  const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "24h" });
-  return token;
-};
 
 class Auth {
-  static create(req, res) {
+  static register(req, res) {
     const { firstName, lastName, email, password } = req.body;
     if (!firstName ||!lastName || !email ||!password) {
       return res.status(401).json({ message: "Enter all required field" });
@@ -25,7 +21,7 @@ class Auth {
       });
     }
 
-    User.findOne({
+    Customer.findOne({
       where: {
         email
       }
@@ -33,21 +29,38 @@ class Auth {
       if (existingUser) {
         return res.status(409).send({ message: "User already exists" });
       }
-      return User.create({
+      return Customer.create({
         firstName,
         lastName,
         email,
         password,
       })
         .then(user => {
-          const token = createToken(user.toJSON());
-          return res.status(201).json({ token, user: user.toJSON() });
+          return res.status(201).json({ user: user.toJSON() });
         })
         .catch(error => {
           return res.status(400).json(error);
         });
     });
   }
+  static getUser(req, res) {
+    const { email } = req.query;
+    if (email) {
+      const user = Customer.findOne({
+        where: {
+          email
+        }
+      }).then((existingUser) => {
+        if (existingUser) {
+          return res.status(200).json(existingUser.toJSON());
+        }
+        return res.status(404).json({ message: 'User does not exist'})
+      }).catch(error => {
+        return res.status(400).json(error);
+      });
+    }
+    return res.status(400).json({ message: 'An error occurred'})
+}
 }
 
 export default Auth;

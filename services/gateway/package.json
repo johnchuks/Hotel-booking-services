@@ -1,0 +1,11 @@
+{
+  "name": "gateway",
+  "version": "1.0.0",
+  "description": "API gateway to our services",
+  "main": "server.js",
+  "author": "johnbosco ohia",
+  "license": "MIT",
+  "dependencies": {
+    "express-gateway": "^1.16.7"
+  }
+}

@@ -11,9 +11,9 @@ const port = process.env.PORT || 9000;
 app.use(cors());
 app.use(bodyparser());
 app.use(morgan('dev'))
-app.get('/', (req, res) => res.send('Weclome to JLBooking-user-service'))
-app.use('/api/users', require('../api'))
+app.get('/', (req, res) => res.send('Weclome to JLBooking-customers-service'))
+app.use('/api/customers', require('../api'))
 
 app.listen(port, () => {
-  console.log(`JLBooking-user-service listening on port ${port}!`)
+  console.log(`JLBooking customers service listening on port ${port}!`)
 })
