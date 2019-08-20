@@ -23,7 +23,7 @@ class Booking {
       });
       if (existingReservation && existingReservation.status === 'RESERVED') {
         return res.status(400).json({
-          message: 'This Room has been already been reserved'
+          message: 'Room has already been reserved'
         })
       }
       let reservation;
