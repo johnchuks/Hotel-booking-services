@@ -12,22 +12,31 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
-    return queryInterface.bulkInsert('Room', [{
+    return queryInterface.bulkInsert('Rooms', [{
       name: 'Economy single room',
-      amount: 40,
-      requiredPoints: 100
+      price: 40,
+      requiredPoints: 100,
+      createdAt: new Date(),
+      updatedAt: new Date()
+
     }, {
       name: 'Economy double room',
-      amount: 60,
-      requiredPoints: 120
+      price: 60,
+      requiredPoints: 120,
+      createdAt: new Date(),
+      updatedAt: new Date()
     }, {
       name: 'Deluxe suite',
-      amount: 90,
-      requiredPoints: 250
+      price: 90,
+      requiredPoints: 250,
+      createdAt: new Date(),
+      updatedAt: new Date()
     }, {
       name: 'Presidential suite',
-      amount: 200,
-      requiredPoints: 600
+      price: 200,
+      requiredPoints: 600,
+      createdAt: new Date(),
+      updatedAt: new Date()
     }], {});
   },
 
@@ -39,6 +48,6 @@ module.exports = {
       Example:
       return queryInterface.bulkDelete('People', null, {});
     */
-    return queryInterface.bulkDelete('Room', null, {});
+    return queryInterface.bulkDelete('Rooms', null, {});
   }
 };

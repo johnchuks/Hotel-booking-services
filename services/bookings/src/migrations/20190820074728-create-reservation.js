@@ -16,6 +16,9 @@ module.exports = {
           'PENDING_APPROVAL', 'RESERVED',
         )
       },
+      roomId: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

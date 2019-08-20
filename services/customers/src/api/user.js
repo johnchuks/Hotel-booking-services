@@ -72,8 +72,8 @@ class Auth {
   static async updateBonusPoints(req, res) {
     const { id } = req.params;
     const { requiredPoints } = req.body
-    const user = await Customer.findByPk({ id })
-    const points = ParseInt(requiredPoints, 10);
+    const user = await Customer.findByPk(id)
+    const points = parseInt(requiredPoints, 10);
     if (!user) {
         return res.status(404).json({ message: 'User does not exist'});
     }

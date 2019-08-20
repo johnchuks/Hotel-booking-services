@@ -4,7 +4,8 @@ module.exports = (sequelize, DataTypes) => {
     user: DataTypes.STRING,
     status: DataTypes.ENUM(
       'PENDING_APPROVAL', 'RESERVED',
-    )
+    ),
+    roomId: DataTypes.INTEGER
   }, {});
   Reservation.associate = function(models) {
     // associations can be defined here
