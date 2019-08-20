@@ -55,5 +55,8 @@ module.exports = (sequelize, DataTypes) => {
     delete user.password;
     return user;
   };
+  Customer.prototype.validatePassword = function(password) {
+    return bcrpyt.compareSync(password, this.password);
+  };
   return Customer;
 }

@@ -12,7 +12,7 @@ app.use(cors());
 app.use(bodyparser());
 app.use(morgan('dev'))
 app.get('/api', (req, res) => res.send('Weclome to legacy program customers-service'))
-app.use('/api/customers', require('../api'))
+app.use('/', require('../api'))
 
 app.listen(port, () => {
   console.log(`Customers service listening on port ${port}!`)

@@ -3,7 +3,8 @@ import Auth from './user';
 
 const router = express.Router();
 
-router.get('/get', Auth.getUser);
-router.post('/create', Auth.register);
+router.post('/login', Auth.login);
+router.patch('/points/:id', Auth.updateBonusPoints);
+router.get('/get/:id', Auth.getUser);
 
 module.exports = router;

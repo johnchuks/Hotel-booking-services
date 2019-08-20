@@ -1,6 +1,18 @@
-const path = require('path');
-const gateway = require('express-gateway');
+const gateway = require('fast-gateway')
+const middleware = require('./middlewares');
+require('dotenv/config');
 
-gateway()
-  .load(path.join(__dirname, 'config'))
-  .run();
+gateway({
+  routes: [{
+    prefix: '/api/customers',
+    target: 'http://host.docker.internal:5000'
+  }, {
+    prefix: '/api/bookings',
+    target: 'http://host.docker.internal:3000',
+    middlewares: [
+      middleware.checkJwtToken
+    ]
+  }]
+}).start(process.env.PORT).then(server => {
+  console.log(`API Gateway listening on port ${process.env.PORT}!`)
+});

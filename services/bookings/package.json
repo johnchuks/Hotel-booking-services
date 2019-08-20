@@ -6,9 +6,11 @@
   "author": "Johnbosco Ohia",
   "license": "MIT",
   "scripts": {
-    "build":"node_modules/.bin/sequelize db:migrate",
-    "start:dev": "nodemon ./src/bin/www --exec babel-node",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "migrate":"node_modules/.bin/sequelize db:migrate",
+    "seed": "node_modules/.bin/sequelize db:seed",
+    "start:dev": "yarn build && nodemon ./src/bin/www --exec babel-node",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "yarn migrate && yarn seed"
   },
   "dependencies": {
     "@babel/cli": "^7.4.4",
@@ -16,6 +18,7 @@
     "@babel/node": "^7.4.5",
     "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.4.5",
+    "axios": "^0.19.0",
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
