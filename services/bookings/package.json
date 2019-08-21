@@ -6,10 +6,11 @@
   "author": "Johnbosco Ohia",
   "license": "MIT",
   "scripts": {
-    "migrate":"node_modules/.bin/sequelize db:migrate",
+    "migrate": "node_modules/.bin/sequelize db:migrate",
     "seed": "node_modules/.bin/sequelize db:seed:all",
     "start:dev": "yarn build && nodemon ./src/bin/www --exec babel-node",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "rebuild:testdb": "NODE_ENV=test node_modules/.bin/sequelize db:migrate:undo:all && NODE_ENV=test node_modules/.bin/sequelize db:migrate",
+    "test": "npm run rebuild:testdb && NODE_ENV=test PORT=3140 node_modules/.bin/mocha ./src/tests/*.spec.js  --recursive  --timeout 10000  --require @babel/register",
     "build": "yarn migrate && yarn seed"
   },
   "dependencies": {
@@ -22,15 +23,22 @@
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
+    "cron": "^1.7.1",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.9.1",
+    "nock": "^10.0.6",
     "nodemon": "^1.19.1",
     "pg": "^7.11.0",
     "pg-hstore": "^2.3.3",
     "randomstring": "^1.1.5",
     "sequelize": "^5.8.10",
     "sequelize-cli": "^5.5.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^6.2.0"
   }
 }

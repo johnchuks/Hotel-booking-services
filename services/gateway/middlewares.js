@@ -13,7 +13,6 @@ module.exports =  {
           message: 'Failed to authenticate token'
         },400);
       }
-      req.user = decoded;
       next();
     });
   }

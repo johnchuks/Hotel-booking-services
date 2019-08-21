@@ -17,3 +17,5 @@ app.use('/', require('../api'))
 app.listen(port, () => {
   console.log(`Customers service listening on port ${port}!`)
 })
+
+export { app };
