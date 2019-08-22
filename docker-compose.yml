@@ -78,8 +78,8 @@ services:
     depends_on:
       - customers
   
-  test-customers:
-    image: loyalty-program-backend-challenge_customers:latest
+  travis-test-customers:
+    image: loyaltyprogrambackendchallenge_customers:latest
     environment:
       - JWT_SECRET=loyaltyprogram
       - PRIVATE_JWT_SECRET=internalloyaltyprogram
@@ -88,8 +88,8 @@ services:
     depends_on:
       - customers
   
-  test-bookings:
-    image: loyalty-program-backend-challenge_bookings:latest
+  travis-test-bookings:
+    image: loyaltyprogrambackendchallenge_bookings:latest
     environment:
       - JWT_SECRET=loyaltyprogram
       - PRIVATE_JWT_SECRET=internalloyaltyprogram

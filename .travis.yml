@@ -8,17 +8,16 @@ before_install:
   # update is required to update the repositories to see the new packages for
   # Docker.
   - sudo apt-get update
-  # - sudo rm /usr/local/bin/docker-compose
-  # - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-  # - chmod +x docker-compose
-  # - sudo mv docker-compose /usr/local/bin
   - docker-compose --version
   - docker-compose build
   - docker ps
 
+before_script:
+
+
 script:
-  - docker-compose run test-customers
-  - docker-compose run test-bookings
+  - docker-compose run travis-test-customers
+  - docker-compose run travis-test-bookings
 
 
 after_script:
