@@ -93,6 +93,7 @@ services:
     environment:
       - JWT_SECRET=loyaltyprogram
       - PRIVATE_JWT_SECRET=internalloyaltyprogram
+      - CUSTOMER_SERV_URL=http://host.docker.internal:5000
       - TEST_DATABASE_URL=postgres://emvncjld:gpaPb8K7Bpfhzz0x9-L2nFbIlQ2nEzkD@isilo.db.elephantsql.com:5432/emvncjld
     command: yarn test
     depends_on:
