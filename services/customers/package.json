@@ -8,8 +8,10 @@
     "seed": "node_modules/.bin/sequelize db:seed:all",
     "build": "yarn migrate & yarn seed",
     "rebuild:testdb": "NODE_ENV=test node_modules/.bin/sequelize db:migrate:undo:all && NODE_ENV=test node_modules/.bin/sequelize db:migrate",
-    "test": "npm run rebuild:testdb && NODE_ENV=test PORT=9000 node_modules/.bin/mocha ./src/tests/*.spec.js  --recursive  --timeout 10000  --require @babel/register",
-    "start:dev": "yarn build & nodemon ./src/bin/www --exec babel-node"
+    "test": "npm run rebuild:testdb && NODE_ENV=test PORT=9000 node_modules/.bin/mocha ./src/tests/*.spec.js  --recursive  --timeout 10000  --require @babel/register --exit",
+    "start:dev": "nodemon ./src/bin/www --exec babel-node",
+    "build:server": "babel ./src --out-dir dist",
+    "start": "yarn build && yarn build:server && node ./dist/bin/www"
   },
   "keywords": [
     "user"

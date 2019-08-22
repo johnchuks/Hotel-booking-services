@@ -18,7 +18,7 @@ app.use('/', require('../api'))
 accessTokenJob.start();
 
 app.listen(port, async () => {
-  // await createAccessToken();
+  await createAccessToken();
   console.log(`Booking service listening on port ${port}!`)
 })
 

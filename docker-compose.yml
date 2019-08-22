@@ -13,7 +13,7 @@ services:
       - TEST_DATABASE_URL=postgres://thbhuobq:VDf3b8zaqYHA7K3fwrk8WvFPz6GjOrdi@pellefant.db.elephantsql.com:5432/thbhuobq
       - JWT_SECRET=loyaltyprogram
       - PRIVATE_JWT_SECRET=internalloyaltyprogram
-    command: ["./wait-for-it.sh", "customers-db:5434", "--", "yarn", "start:dev"]
+    command: ["./wait-for-it.sh", "customers-db:5434", "--", "yarn", "start"]
     volumes:
       - './services/customers:/usr/src/app'
       - '/usr/src/app/node_modules'
@@ -43,7 +43,7 @@ services:
       - TEST_DATABASE_URL=postgres://emvncjld:gpaPb8K7Bpfhzz0x9-L2nFbIlQ2nEzkD@isilo.db.elephantsql.com:5432/emvncjld
       - JWT_SECRET=loyaltyprogram
       - PRIVATE_JWT_SECRET=internalloyaltyprogram
-    command: ["./wait-for-it.sh", "bookings-db:5436", "--", "yarn", "start:dev"]
+    command: ["./wait-for-it.sh", "bookings-db:5436", "--", "yarn", "start"]
     volumes:
       - './services/bookings:/usr/src/app'
       - '/usr/src/app/node_modules'
@@ -66,12 +66,31 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
-    command: yarn start:dev
+    command: yarn start
     volumes:
       - './services/gateway:/usr/src/app'
       - '/usr/src/app/node_modules'
     environment:
       - PORT=8080
       - JWT_SECRET=loyaltyprogram
+      - CUSTOMER_SERVICE_BASE_URL=http://host.docker.internal:5000
+      - BOOKING_SERVICE_BASE_URL=http://host.docker.internal:3000
     depends_on:
       - customers
+  
+  test-customers:
+    image: loyalty-program-backend-challenge_customers:latest
+    environment:
+      - JWT_SECRET=loyaltyprogram
+      - PRIVATE_JWT_SECRET=internalloyaltyprogram
+      - TEST_DATABASE_URL=postgres://thbhuobq:VDf3b8zaqYHA7K3fwrk8WvFPz6GjOrdi@pellefant.db.elephantsql.com:5432/thbhuobq
+    command: yarn test
+    depends_on:
+      customers
+  
+  test-bookings:
+    image: loyalty-program-backend-challenge_bookings:latest
+    environment:
+      - JWT_SECRET=loyaltyprogram
+      - PRIVATE_JWT_SECRET=internalloyaltyprogram
+      - TEST_DATABASE_URL=postgres://emvncjld:gpaPb8K7Bpfhzz0x9-L2nFbIlQ2nEzkD@isilo.db.elephantsql.com:5432/emvncjld

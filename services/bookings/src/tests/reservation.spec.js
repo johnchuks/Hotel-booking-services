@@ -3,7 +3,7 @@ import chaiHttp from 'chai-http';
 import jwt from 'jsonwebtoken';
 import nock from 'nock';
 import { app } from '../bin/www';
-import { Reservation, Room } from '../models';
+import { Reservation, Room, AccessToken } from '../models';
 
 const { expect } = chai;
 const createReservation = (reservation) => Reservation.create(reservation);
@@ -40,7 +40,10 @@ describe('BOOKING SERVICE', () => {
     }
      room1 = await createRoom(register);
      room2 = await createRoom(register2);
-     nock(process.env.CUSTOMER_SERV_URL)
+     nock(process.env.CUSTOMER_SERV_URL, { reqheaders: {
+      'content-type': 'application/json',
+      'authorization': token 
+   }, allowUnmocked: true })
       .get(`/get/${userDetails.id}`)
       .reply(200, {
         data: {
@@ -56,6 +59,9 @@ describe('BOOKING SERVICE', () => {
     await Room.destroy({ truncate: true, cascade: true });
     await Reservation.destroy({ truncate: true, cascade: true });
   });
+  after(async() => {
+    await AccessToken.destroy({ truncate: true, cascade: true });
+  })
 
   describe('Create Reservations', () => {
     it('should create a new reservation for the user with RESERVED status', async () => {

@@ -3,6 +3,8 @@ import jwt from 'jsonwebtoken';
 
 import { AccessToken } from '../models';
 
+require("@babel/polyfill");
+
 const createAccessToken = async () => {
   try {
     const existingToken = await AccessToken.findOne({

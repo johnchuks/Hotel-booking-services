@@ -1,19 +1,24 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+import jwt from 'jsonwebtoken';
 import { app } from '../bin/www';
 import { Customer } from '../models';
 
 const { expect } = chai;
 const createUser = (user) => Customer.create(user);
+const serviceToken = (payload) => jwt.sign(payload, process.env.PRIVATE_JWT_SECRET, { expiresIn: '24h'});
 chai.use(chaiHttp);
 let register = {};
 let login = {};
 let user;
 describe('CUSTOMER SERVICE', () => {
+  before(async() => {
+    const token = await serviceToken({ service: 'unnamed-service'});
+  })
   beforeEach(async () => {
     register = {
       firstName: 'vincent',
-      lastName: 'hamza',
+      lastName: 'james',
       password: '12345678',
       email: 'frank@gmail.com',
       points: 230
@@ -71,6 +76,7 @@ describe('CUSTOMER SERVICE', () => {
         .request(app)
         .patch(`/points/${user.id}`)
         .send({ requiredPoints: 100 })
+        .set({ 'authorization': token})
       expect(res.status).to.equal(200);
       expect(res.body.message).to.equal('Points successfully deducted')
       expect(res.body.points).to.equal(130)
@@ -81,6 +87,7 @@ describe('CUSTOMER SERVICE', () => {
         .request(app)
         .patch(`/points/${100}`)
         .send({ requiredPoints: 100 })
+        .set({ 'authorization': token})
       expect(res.status).to.equal(404);
       expect(res.body.message).to.equal('User does not exist')
   })
@@ -89,6 +96,7 @@ describe('CUSTOMER SERVICE', () => {
         .request(app)
         .patch(`/points/${user.id}`)
         .send({ requiredPoints: 900 })
+        .set({ 'authorization': token})
       expect(res.status).to.equal(400);
       expect(res.body.message).to.equal('User does not have the required points');
   })
