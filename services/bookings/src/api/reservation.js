@@ -1,14 +1,20 @@
 import axios from "axios";
-import { Reservation, Room } from "../models";
+import { Reservation, Room, AccessToken } from "../models";
 
 class Booking {
   static async createReservation(req, res) {
     const { user } = req;
     const { room } = req.query;
     if (!user) return res.status(401).json({ message: "Unauthorized" });
+    const accessToken = await AccessToken.findOne({ where: { uuid: 'booking-1' }});
+    const headers = {
+      'Content-Type': 'application/json',
+      'authorization': accessToken.token
+    }
     try {
       const response = await axios.get(
-        `${process.env.CUSTOMER_SERV_URL}/get/${user.id}`
+        `${process.env.CUSTOMER_SERV_URL}/get/${user.id}`,
+        { headers }
       );
       const authUser = response.data;
       const existingRoom = await Room.findByPk(room);
@@ -32,7 +38,8 @@ class Booking {
         try {
           const response = await axios.patch(
             `${process.env.CUSTOMER_SERV_URL}/points/${user.id}`,
-            { requiredPoints: existingRoom.requiredPoints }
+            { requiredPoints: existingRoom.requiredPoints },
+            { headers }
           );
           reservation =
             response &&
@@ -55,6 +62,7 @@ class Booking {
         return res.status(201).send(reservation);
       }
     } catch (error) {
+      console.log(error.message)
       return res.status(400).send({ message: "An error occurred" });
     }
   }
