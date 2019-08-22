@@ -5,10 +5,10 @@ require('dotenv/config');
 gateway({
   routes: [{
     prefix: '/api/customers',
-    target: 'http://host.docker.internal:5000'
+    target: process.env.CUSTOMER_SERVICE_BASE_URL
   }, {
     prefix: '/api/bookings',
-    target: 'http://host.docker.internal:3000',
+    target: process.env.BOOKING_SERVICE_BASE_URL,
     middlewares: [
       middleware.checkJwtToken
     ]
