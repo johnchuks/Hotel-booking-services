@@ -73,8 +73,8 @@ services:
     environment:
       - PORT=8080
       - JWT_SECRET=loyaltyprogram
-      - CUSTOMER_SERVICE_BASE_URL=http://customers:5000
-      - BOOKING_SERVICE_BASE_URL=http://bookings:3000
+      - CUSTOMER_SERVICE_BASE_URL=http://host.docker.internal:5000
+      - BOOKING_SERVICE_BASE_URL=http://host.docker.internal:3000
     depends_on:
       - customers
       - bookings
