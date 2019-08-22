@@ -1,7 +1,7 @@
 import express from 'express'
 import Booking from './reservation';
 
-import middleware from './middlewares';
+import middleware from './middleware';
 
 const router = express.Router();
 

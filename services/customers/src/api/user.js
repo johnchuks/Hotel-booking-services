@@ -78,13 +78,13 @@ class Auth {
         return res.status(404).json({ message: 'User does not exist'});
     }
     if ( points > user.points) {
-      return res.status(400).json({message:'user does not have the required points'});
+      return res.status(400).json({message:'User does not have the required points'});
     }
     const substractedPoints = user.points - points;
     return user.update({
      points: substractedPoints
     }).then(user => 
-      res.status(200).json({ message: 'Points successfully deducted'})
+      res.status(200).json({ message: 'Points successfully deducted', points: user.points })
     );
   }
 

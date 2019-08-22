@@ -1,4 +1,4 @@
-version: '3'
+version: '3.3'
 
 services:
   customers:
@@ -10,8 +10,10 @@ services:
     environment:
       - PORT=5000
       - DATABASE_URL=postgresql://postgres:postgres@customers-db:5432/customers
+      - TEST_DATABASE_URL=postgres://thbhuobq:VDf3b8zaqYHA7K3fwrk8WvFPz6GjOrdi@pellefant.db.elephantsql.com:5432/thbhuobq
       - JWT_SECRET=loyaltyprogram
-    command: ["./wait-for-it.sh", "customers-db:5434", "--", "yarn", "start:dev"]
+      - PRIVATE_JWT_SECRET=internalloyaltyprogram
+    command: ["./wait-for-it.sh", "customers-db:5434", "--", "yarn", "start"]
     volumes:
       - './services/customers:/usr/src/app'
       - '/usr/src/app/node_modules'
@@ -38,8 +40,10 @@ services:
       - PORT=3000
       - DATABASE_URL=postgresql://postgres:postgres@bookings-db:5432/bookings
       - CUSTOMER_SERV_URL=http://host.docker.internal:5000
+      - TEST_DATABASE_URL=postgres://emvncjld:gpaPb8K7Bpfhzz0x9-L2nFbIlQ2nEzkD@isilo.db.elephantsql.com:5432/emvncjld
       - JWT_SECRET=loyaltyprogram
-    command: ["./wait-for-it.sh", "bookings-db:5436", "--", "yarn", "start:dev"]
+      - PRIVATE_JWT_SECRET=internalloyaltyprogram
+    command: ["./wait-for-it.sh", "bookings-db:5436", "--", "yarn", "start"]
     volumes:
       - './services/bookings:/usr/src/app'
       - '/usr/src/app/node_modules'
@@ -62,12 +66,15 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
-    command: yarn start:dev
+    command: yarn start
     volumes:
       - './services/gateway:/usr/src/app'
       - '/usr/src/app/node_modules'
     environment:
       - PORT=8080
       - JWT_SECRET=loyaltyprogram
+      - CUSTOMER_SERVICE_BASE_URL=http://host.docker.internal:5000
+      - BOOKING_SERVICE_BASE_URL=http://host.docker.internal:3000
     depends_on:
       - customers
+      - bookings
