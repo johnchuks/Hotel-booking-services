@@ -86,7 +86,7 @@ services:
       - TEST_DATABASE_URL=postgres://thbhuobq:VDf3b8zaqYHA7K3fwrk8WvFPz6GjOrdi@pellefant.db.elephantsql.com:5432/thbhuobq
     command: yarn test
     depends_on:
-      customers
+      - customers
   
   test-bookings:
     image: loyalty-program-backend-challenge_bookings:latest
@@ -94,3 +94,6 @@ services:
       - JWT_SECRET=loyaltyprogram
       - PRIVATE_JWT_SECRET=internalloyaltyprogram
       - TEST_DATABASE_URL=postgres://emvncjld:gpaPb8K7Bpfhzz0x9-L2nFbIlQ2nEzkD@isilo.db.elephantsql.com:5432/emvncjld
+    command: yarn test
+    depends_on:
+      - bookings

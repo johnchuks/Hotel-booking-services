@@ -10,10 +10,10 @@ const serviceToken = (payload) => jwt.sign(payload, process.env.PRIVATE_JWT_SECR
 chai.use(chaiHttp);
 let register = {};
 let login = {};
-let user;
+let user, token;
 describe('CUSTOMER SERVICE', () => {
   before(async() => {
-    const token = await serviceToken({ service: 'unnamed-service'});
+    token = await serviceToken({ service: 'unnamed-service'});
   })
   beforeEach(async () => {
     register = {
