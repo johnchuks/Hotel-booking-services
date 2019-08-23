@@ -1,20 +1,20 @@
 version: '3.3'
 
 services:
-  test-customers:
-    image: loyalty-program-backend-challenge_customers:latest
+  travis-test-customers:
+    image: loyaltyprogrambackendchallenge_customers:latest
     environment:
       - JWT_SECRET=loyaltyprogram
       - PRIVATE_JWT_SECRET=internalloyaltyprogram
       - TEST_DATABASE_URL=postgres://thbhuobq:VDf3b8zaqYHA7K3fwrk8WvFPz6GjOrdi@pellefant.db.elephantsql.com:5432/thbhuobq
     command: yarn test
   
-  test-bookings:
-    image: loyalty-program-backend-challenge_bookings:latest
+  travis-test-bookings:
+    image: loyaltyprogrambackendchallenge_bookings:latest
     environment:
       - JWT_SECRET=loyaltyprogram
       - PRIVATE_JWT_SECRET=internalloyaltyprogram
-      - CUSTOMER_SERV_URL=http://host.docker.internal:5000
+      - CUSTOMER_SERV_URL=http://www.mock-server.com
       - TEST_DATABASE_URL=postgres://emvncjld:gpaPb8K7Bpfhzz0x9-L2nFbIlQ2nEzkD@isilo.db.elephantsql.com:5432/emvncjld
       - REDIS_URL=redis://redis:6379
     command: yarn test
