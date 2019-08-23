@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Reservation, Room, AccessToken } from "../models";
+import emailQueue from '../worker';
 
 class Booking {
   static async createReservation(req, res) {
@@ -59,6 +60,8 @@ class Booking {
         });
       }
       if (reservation) {
+        // send an email to service owner
+        emailQueue.add({ user: { firstName: authUser.firstName, lastName: authUser.lastName }, room: existingRoom.name });
         return res.status(201).send(reservation);
       }
     } catch (error) {
