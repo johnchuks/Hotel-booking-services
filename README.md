@@ -15,5 +15,4 @@ This is my solution to the booking reservation service for Trivago's backend cha
 7. To remove all volumes and containers run `docker-compose down`
 
 ### Testing
-1. You can test a service by running `docker-compose -f docker-compose-test.yml run ${service_name}` where `service_name` can be `test-customers` or `test-bookings`
-
+1. You can test a service by running `docker-compose -f docker-compose-test.yml run test-customers`

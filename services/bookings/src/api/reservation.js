@@ -61,8 +61,8 @@ class Booking {
       }
       if (reservation) {
         // send an email to service owner
-        emailQueue.add({ user: { firstName: authUser.firstName, lastName: authUser.lastName }, room: existingRoom.name });
-        return res.status(201).send(reservation);
+        // emailQueue.add({ user: { firstName: authUser.firstName, lastName: authUser.lastName }, room: existingRoom.name });
+        return res.status(201).json(reservation);
       }
     } catch (error) {
       console.log(error.message)

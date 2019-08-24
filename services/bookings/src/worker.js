@@ -2,6 +2,7 @@ const Queue = require('bull');
 
 const REDIS_URL = process.env.REDIS_URL;
 
+console.log(REDIS_URL, '====S=S==S=S=S===S')
 let emailQueue = new Queue('email', REDIS_URL);
 
 emailQueue.process(function (job, done) {
