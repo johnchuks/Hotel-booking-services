@@ -14,8 +14,6 @@ before_install:
 
 script:
   - docker-compose -f docker-compose-travis.yml run travis-test-customers
-  - docker-compose -f docker-compose-travis.yml run travis-test-bookings
-
 
 after_script:
   - docker-compose down
