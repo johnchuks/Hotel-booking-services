@@ -29,7 +29,7 @@ const createAccessToken = async () => {
 }
 
 const accessTokenJob = new CronJob(
-  '0 0 */1 * * *',
+  '0 0 */23 * * *',
   async () => {
    await createAccessToken();
   });
