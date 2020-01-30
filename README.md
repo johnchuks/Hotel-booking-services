@@ -1,8 +1,8 @@
 [![Build Status](https://travis-ci.com/johnchuks/Loyalty-program-backend-challenge.svg?token=9A6KLhYaSrYZHmHD4CSZ&branch=master)](https://travis-ci.com/johnchuks/Loyalty-program-backend-challenge)
 
 
-# Loyalty Program Backend Challenge - Booking Reservation Services
-This is my solution to the booking reservation service for Trivago's backend challenge
+# Booking Reservation Services
+This is my solution to the booking reservation service built with a microservice architecture
 
 ### Installation
 1. Clone the repository
