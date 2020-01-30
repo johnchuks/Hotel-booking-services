@@ -6,7 +6,6 @@ This is my solution to the booking reservation service built with a microservice
 
 ### Installation
 1. Clone the repository
-  - https://github.com/johnchuks/Loyalty-program-backend-challenge.git
 2. Make sure you are on the `master` branch
 3. Ensure you have `docker` installed on your local machine. You can check this by running `docker --version`
 4. Run `docker-compose build` to build the service images
