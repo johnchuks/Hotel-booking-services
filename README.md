@@ -2,7 +2,7 @@
 
 
 # Booking Reservation Services
-This is my solution to the booking reservation service built with a microservice architecture
+A booking reservation service built with  Node.js and a microservice architecture in mind
 
 ### Installation
 1. Clone the repository
